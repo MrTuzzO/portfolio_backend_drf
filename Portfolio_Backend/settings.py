@@ -25,8 +25,9 @@ SECRET_KEY = 'django-insecure-v0(oyt24+bgb)*&@@$0bn=(eyr#p87$7fta(c^_kk-lw=&rb=w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -39,7 +40,27 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+INSTALLED_APPS += [
+    # Installed Apps
+    'rest_framework',
+    'corsheaders',
+    'drf_yasg',
+    'django_cleanup.apps.CleanupConfig',
+    'ckeditor',
+    'ckeditor_uploader',
+
+    # Created Apps
+    'skills_and_technology',
+    'certification',
+    'education',
+    'experience',
+    'project',
+    'core',    
+    'blog',
+]
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,6 +86,14 @@ TEMPLATES = [
         },
     },
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
 
 WSGI_APPLICATION = 'Portfolio_Backend.wsgi.application'
 
@@ -113,8 +142,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
+# Static files (CSS, JS, images)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]  # extra static files directory
+STATIC_ROOT = BASE_DIR / "staticfiles"    # where collectstatic will collect files
 
-STATIC_URL = 'static/'
+# Media files (uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media/"
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

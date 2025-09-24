@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView
+from .models import STCategory, SkillAndTechnology
+from .serializers import STCategorySerializer, SkillAndTechnologySerializer
 
-# Create your views here.
+
+class STCategoryListView(ListAPIView):
+    queryset = STCategory.objects.all()
+    serializer_class = STCategorySerializer
+
+
+class SkillAndTechnologyListView(ListAPIView):
+    queryset = SkillAndTechnology.objects.all()
+    serializer_class = SkillAndTechnologySerializer
