@@ -32,6 +32,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',  # Must be before django.contrib.admin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -153,7 +154,207 @@ MEDIA_ROOT = BASE_DIR / "media/"
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
+# CKEditor Configuration
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': '100%',
+    },
+    'blog': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Table', 'HorizontalRule'],
+            ['TextColor', 'BGColor'],
+            ['Smiley', 'SpecialChar'],
+            ['Source'],
+            ['Undo', 'Redo'],
+            ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Print', 'SpellChecker', 'Scayt'],
+            ['Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt'],
+            ['Maximize', 'ShowBlocks'],
+            '/',
+            ['Format', 'Font', 'FontSize'],
+        ],
+        'height': 400,
+        'width': '100%',
+        'filebrowserWindowWidth': 940,
+        'filebrowserWindowHeight': 725,
+        'toolbarCanCollapse': True,
+        'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+    }
+}
+
+# CKEditor Upload Settings
+CKEDITOR_RESTRICT_BY_USER = True
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_ALLOW_NONIMAGE_FILES = False
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Jazzmin Settings
+JAZZMIN_SETTINGS = {
+    # Title on the login screen and the main page
+    "site_title": "Portfolio Admin",
+    "site_header": "Portfolio Backend",
+    "site_brand": "Portfolio",
+    "site_logo": None,  # Can add logo path later
+    "login_logo": None,  # Can add login logo later
+    "login_logo_dark": None,
+    "site_logo_classes": "img-circle",
+    "site_icon": "fas fa-briefcase",  # Portfolio icon
+    "welcome_sign": "Welcome to Portfolio Admin",
+    "copyright": "Portfolio Backend Admin",
+    "search_model": ["auth.User", "blog.Blog", "project.Project"],
+    "user_avatar": None,
+
+    # Top Menu
+    "topmenu_links": [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "API Docs", "url": "/swagger/", "new_window": True},
+        {"name": "View Site", "url": "/", "new_window": True},
+    ],
+
+    # User Menu on the top right
+    "usermenu_links": [
+        {"name": "View Site", "url": "/", "new_window": True},
+        {"model": "auth.user"}
+    ],
+
+    # Side Menu Items
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [
+        "project.ProjectCategory",
+        "skills_and_technology.STCategory",
+    ],
+    "order_with_respect_to": [
+        "experience", 
+        "education", 
+        "project", 
+        "blog", 
+        "certification", 
+        "skills_and_technology",
+        "core", 
+        "auth", 
+    ],
+
+    # Custom Icons for Apps and Models
+    "icons": {
+        # Auth app
+        "auth": "fas fa-users-cog",
+        "auth.User": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        
+        # Core app
+        "core": "fas fa-cogs",
+        "core.SiteContent": "fas fa-globe",
+        "core.SocialLink": "fas fa-share-square",
+        
+        # Blog app
+        "blog": "fas fa-blog",
+        "blog.Blog": "fas fa-newspaper",
+        
+        # Project app  
+        "project": "fas fa-project-diagram",
+        "project.Project": "fas fa-laptop-code",
+        "project.ProjectCategory": "fas fa-folder",
+        
+        # Experience app
+        "experience": "fas fa-briefcase",
+        "experience.WorkExperience": "fas fa-building",
+        
+        # Education app
+        "education": "fas fa-graduation-cap",
+        "education.Education": "fas fa-university",
+        
+        # Certification app
+        "certification": "fas fa-certificate",
+        "certification.Certification": "fas fa-award",
+        
+        # Skills and Technology app
+        "skills_and_technology": "fas fa-code",
+        "skills_and_technology.STCategory": "fas fa-list",
+        "skills_and_technology.SkillAndTechnology": "fas fa-tools",
+    },
+    
+    # Default Icons
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    # Related Modal
+    "related_modal_active": False,
+
+    # UI Customizer
+    "custom_css": None,
+    "custom_js": None,
+    "use_google_fonts_cdn": True,
+    "show_ui_builder": False,
+
+    # Change Form
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {
+        "auth.user": "collapsible", 
+        "auth.group": "vertical_tabs"
+    },
+    
+    # Theme
+    "theme": "default",  # Options: default, cerulean, cosmo, cyborg, darkly, flatly, journal, litera, lumen, lux, materia, minty, pulse, sandstone, simplex, sketchy, slate, solar, spacelab, superhero, united, yeti
+    "dark_mode_theme": None,
+}
+
+# Jazzmin UI Tweaks
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": False,
+    "accent": "accent-primary",
+    "navbar": "navbar-white navbar-light",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "default",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-outline-primary",
+        "secondary": "btn-outline-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}
