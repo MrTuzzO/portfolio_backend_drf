@@ -5,7 +5,7 @@ app_name = 'project'
 
 urlpatterns = [
     # Category URLs
-    path('categories/', views.ProjectCategoryListView.as_view(), name='category-list'),
+    path('project-categories/', views.ProjectCategoryListView.as_view(), name='category-list'),
     
     # Project URLs
     path('projects/', views.ProjectListView.as_view(), name='project-list'),

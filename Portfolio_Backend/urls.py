@@ -51,7 +51,7 @@ urlpatterns = [
     path('api/', include('project.urls')),
     path('api/', include('blog.urls')),
     path('api/', include('certification.urls')),
-    # path('api/', include('core.urls')),
+    path('api/', include('core.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
